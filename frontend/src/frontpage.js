@@ -1,5 +1,6 @@
 import React,{ useState } from "react";
-import Products from "./items";
+import productsData from "./items";
+import Products from "./products";
 import "./App.css" 
 import ShoppingCart from "./shoppingcart";
 
@@ -7,9 +8,9 @@ function Frontpage() {
         const [cart, setCart] = useState ([]);
         const [showCart, setShowcart] = useState(false);
 
-    const addToCart = (product) => {
-        if (product.stock > 0) {
-    setCart((prevCart) => [...prevCart, product]);
+        const addToCart = (productsData) => {
+            if (productsData.stock > 0) {
+                setCart((prevCart) => [...prevCart, productsData]);
     }
 };
 

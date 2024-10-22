@@ -2,7 +2,7 @@
 
 //An array with products objects, where each product has a name, price, and description.
 
-const products = [
+const productsData = [
  
     {
         id: 1, name: "Razer naga", price: 1245, description: "The gaming mouse for MMO gamers", stock: 10, image: "https://picsum.photos/200",
@@ -27,4 +27,4 @@ const products = [
 
 
 // The array is exported so it can be used in other parts of the app
-export default products;
+export default productsData;

@@ -1,5 +1,5 @@
 import React from "react"
-import "./"
+
 
 const ShoppingCart = ({cart, deleteCart, buyCart}) =>{
 	const totPrice = cart.reduce((total, product) => total + product.price, 0);
@@ -7,7 +7,7 @@ const ShoppingCart = ({cart, deleteCart, buyCart}) =>{
 	return (
 		<div className="cart">
 			<h3>Cart</h3>
-			{cart.lenght === 0 ? ("Your cart is empty") : 
+			{cart.lenght === 0 ? ("Your cart is empty") : (
 			<div>
 				<ul>
 					{cart.map((product, index) => (
@@ -20,7 +20,7 @@ const ShoppingCart = ({cart, deleteCart, buyCart}) =>{
 				<button onClick={deleteCart}>Clear cart</button>
 				<button onClick={buyCart}>Checkout</button>
 			</div>
-			}
+			)}
 		</div>
 	);
 };
