@@ -1,7 +1,7 @@
 import React,{ useState,useEffect } from "react";
 import Products from "./Products.jsx";
 import "./App.css" 
-import ShoppingCart from "./shoppingcart.jsx";
+import ShoppingCart from "./Shoppingcart.jsx";
 
 function Frontpage() {
         const [cart, setCart] = useState ([]); // State that tracks the products added to the cart.

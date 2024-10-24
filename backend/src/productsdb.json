@@ -1,42 +1,41 @@
 [
     {
-        "id": 1,
-        "name": "Razer naga",
-        "price": 1245,
-        "description": "The gaming mouse for MMO gamers",
-        "stock": 10,
-        "image": "https://picsum.photos/200"
+        "id":1,
+        "name":"Razer naga",
+        "price":1245,
+        "stock":10,
+        "image":"https://picsum.photos/id/5/200/?grayscale"
     },
+        
     {
-        "id": 2,
-        "name": "Logitech G305",
-        "price": 795,
-        "description": "LIGHTSPEED wireless for fast and reliable performance",
-        "stock": 10,
-        "image": "https://picsum.photos/200"
+        "id":2,
+        "name":"Logitech G305",
+        "price":795,
+        "stock":10,
+        "image":"https://picsum.photos/id/4/200/?grayscale"
     },
+
     {
-        "id": 3,
-        "name": "Razer DeathAdder",
-        "price": 1099,
-        "description": "Ergonomic mouse designed with deadly curves and killer lines",
-        "stock": 10,
-        "image": "https://picsum.photos/200"
+        "id":3,
+        "name":"Razer DeathAdder",
+        "price":1099,
+        "stock":2,
+        "image":"https://picsum.photos/id/3/200/?grayscale"
     },
+
     {
-        "id": 4,
-        "name": "Logitech MX Master 3S",
-        "price": 999,
-        "description": "Mouse with Ultra-fast Scrolling, Ergo, 8K DPI",
-        "stock": 10,
-        "image": "https://picsum.photos/200"
+        "id":4,
+        "name":"Logitech MX Master 3S",
+        "price":999,
+        "stock":10,
+        "image":"https://picsum.photos/id/2/200/?grayscale"
     },
+
     {
-        "id": 5,
-        "name": "ProtoArc Wireless Trackball Mouse",
-        "price": 200,
-        "description": "Equipped with a smooth and precise trackball",
-        "stock": 10,
-        "image": "https://picsum.photos/200"
+        "id":5,
+        "name":"ProtoArc Wireless Trackball Mouse",
+        "price":200,
+        "stock":10,
+        "image":"https://picsum.photos/id/1/200/?grayscale"
     }
 ]

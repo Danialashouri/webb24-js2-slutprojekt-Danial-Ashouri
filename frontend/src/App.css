@@ -1,4 +1,6 @@
- 
+body {
+  background-color: #000000; 
+} 
 nav {
   display: flex;
   justify-content: center;
@@ -9,9 +11,9 @@ nav {
 nav button {
   margin: 0 10px;
   padding: 10px 20px;
-  border: 1px solid gray;
-  background-color: coral;
+  background-color: #76b900;
   cursor: pointer;
+
 }
 
 .Productline {
@@ -29,25 +31,46 @@ nav button {
 }
 
 .product-card {
-  border: 1px solid gray;
+  border: 1px solid rgb(255, 255, 255);
   padding: 20px;
   text-align: center;
   width: 200px;
-  border-radius: 5%;
+  border-radius: 3%;
+  
 }
 
 .product-card img {
   width: 150px;
   height: 150px;
   margin-bottom: 10px;
-  border-radius: 5%;
+  border-radius: 3%;
+}
+
+p{
+  color: #ffffff;
+}
+
+h2{
+  color: #ffffff;
+}
+
+h3{
+  color: #ffffff;
+}
+
+/* App.css */
+ul li {
+  color: #ffffff; /* Replace with your desired text color */
 }
 
 button {
   padding: 10px;
-  background-color: paleturquoise;
+  margin:20px;
+  background-color: #76b900;
   border: none;
   cursor: pointer;
+  color: #000000;
+  border-radius: 10%;
 }
 
 button.disabled {
