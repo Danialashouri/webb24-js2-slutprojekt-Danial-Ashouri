@@ -4,7 +4,7 @@ import "./App.css";
 
 function Products({addToCart}) {
     const [products, setProducts] = useState([]);
-    
+    //Fetch products from backend
     useEffect(() => {
         fetch("http://localhost:5002/products")
             .then(response => {
@@ -34,7 +34,7 @@ function Products({addToCart}) {
                 <button 
                 onClick={() => addToCart(product)}
                 disabled={product.stock === 0}       // Disables button if product stock is 0 
-                className={product.stock === 0 ? 'disabled' : ''} // adds disable class if outt of stock
+                className={product.stock === 0 ? 'disabled' : ''} 
             >
                 {product.stock > 0 ? "BUY" : "OUT OF STOCK"} {/* Changes button text based on stock */}
             </button>

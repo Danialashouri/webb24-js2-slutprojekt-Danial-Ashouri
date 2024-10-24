@@ -4,10 +4,11 @@ import "./App.css"
 import ShoppingCart from "./Shoppingcart.jsx";
 
 function Frontpage() {
-        const [cart, setCart] = useState ([]); // State that tracks the products added to the cart.
-        const [showCart, setShowCart] = useState(false);  //State that toggles between products or cart page.
+        const [cart, setCart] = useState ([]); 
+        const [showCart, setShowCart] = useState(false);  
         const [products, setProducts] = useState([]);
 
+        // Retrieve product data
         useEffect(() => {
             fetch("http://localhost:5002/products")
                 .then(response => {
@@ -17,17 +18,17 @@ function Frontpage() {
                     return response.json();
                 })
                 .then(data => {
-                    setProducts(data); // Set the fetched product data to the products state
+                    setProducts(data); 
                 })
                 .catch(error => {
                     console.error("Problem fetching products", error);
                 });
         }, []);
 
-            // Function to add a product to the cart if there's stock available.
+    // Adds products to the cart and reduces stock on the server      
     const addToCart = (productData) => {
         if (productData.stock > 0) {
-            // Decrease stock in the backend
+         
             fetch("http://localhost:5002/products", {
                 method: "POST",
                 headers: {
@@ -37,10 +38,10 @@ function Frontpage() {
             })
             .then(response => response.json())
             .then(updatedProduct => {
-            // Add the updated product (with reduced stock) to the cart
+           
             setCart((prevCart) => [...prevCart, productData]);
 
-            // Update the stock locally for the displayed products
+
             setProducts((prevProducts) => 
                 prevProducts.map(p => p.id === updatedProduct.id ? updatedProduct : p)
             );
@@ -51,17 +52,16 @@ function Frontpage() {
     }
 };
 
-//Function that clears the cart
+//Function that clears the cart and restores stock to server
     const deleteCart = () => {
-        // Create a map to keep track of stock adjustments
-        const stockUpdates = {};
+         const stockUpdates = {};
 
-        // Count how many of each item is in the cart
+        
         cart.forEach(product => {
-            stockUpdates[product.id] = (stockUpdates[product.id] || 0) + 1; // Initialize or increment
+            stockUpdates[product.id] = (stockUpdates[product.id] || 0) + 1; 
         });
 
-        // Send a request to update the stock for each product
+   
         Promise.all(
             Object.keys(stockUpdates).map(productId => {
                 return fetch("http://localhost:5002/products", {
@@ -69,7 +69,7 @@ function Frontpage() {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ productId: parseInt(productId), change: stockUpdates[productId] }) // Restore stock
+                    body: JSON.stringify({ productId: parseInt(productId), change: stockUpdates[productId] }) 
                 });
             })
         )
@@ -79,9 +79,9 @@ function Frontpage() {
                     throw new Error("Error updating stock");
                 }
             });
-            // Clear the cart after restoring stock
+         
             setCart([]);
-            setShowCart(false); // Redirect to product page after clearing the cart
+            setShowCart(false);
         })
         .catch(error => {
             console.error("Error during clearing cart process:", error);
@@ -89,17 +89,17 @@ function Frontpage() {
     };
 
 
-// Function "Makes" a purchase by displaying a thank you message and clearing the cart.
-const buyCart = () => {
+    // Processes checkout reduces stock and clears the cart
+    const buyCart = () => {
     const stockUpdates = new Map();
 
-    // Count how many of each item is in the cart for checkout
+    //
     cart.forEach(product => {
         const currentCount = stockUpdates.get(product.id) || 0;
-        stockUpdates.set(product.id, currentCount + 1);  // Increment count
+        stockUpdates.set(product.id, currentCount + 1); 
     });
 
-    // Send a request to update the stock for each product
+    
     Promise.all(
         Object.keys(stockUpdates).map(productId => {
             return fetch("http://localhost:5002/products", {
@@ -107,7 +107,7 @@ const buyCart = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ productId: parseInt(productId), change: -stockUpdates[productId] }) // Decrease stock
+                body: JSON.stringify({ productId: parseInt(productId), change: -stockUpdates[productId] }) 
             });
         })
     )
@@ -117,9 +117,10 @@ const buyCart = () => {
                 throw new Error("Error updating stock");
             }
         });
+        // Clear the cart after checkout and redirect to product page
         alert("Thank you for your purchase!");
-        setCart([]); // Clear the cart after successful checkout
-        setShowCart(false); // Redirect to product page after checkout
+        setCart([]); 
+        setShowCart(false);
     })
     .catch(error => {
         console.error("Error during checkout process:", error);

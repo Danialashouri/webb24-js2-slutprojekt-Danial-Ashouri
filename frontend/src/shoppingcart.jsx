@@ -1,11 +1,11 @@
 import React from "react"
 
-// The ShoppingCart component displays the contents of the cart and provides options to delete or checkout the cart
+//displays the contents of the cart and provides options to delete or checkout the cart
 const ShoppingCart = ({cart, deleteCart, buyCart,}) =>{
 	
 	const multipleItems = cart.reduce((acc, product) => {
-        if (acc[product.id]) {
-            acc[product.id].quantity += 1;  // If product exists, increment quantity
+        if (acc[product.id]) {				// when putting product in cart, if it excist adds 1 to the quantity
+            acc[product.id].quantity += 1;  // 
         } else {
             acc[product.id] = { ...product, quantity: 1 }; // Otherwise, initialize with quantity 1
         }
