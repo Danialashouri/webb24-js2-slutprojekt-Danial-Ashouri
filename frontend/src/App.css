@@ -10,7 +10,7 @@ nav button {
   margin: 0 10px;
   padding: 10px 20px;
   border: 1px solid gray;
-  background-color: lightblue;
+  background-color: coral;
   cursor: pointer;
 }
 
@@ -45,7 +45,7 @@ nav button {
 
 button {
   padding: 10px;
-  background-color: lightblue;
+  background-color: paleturquoise;
   border: none;
   cursor: pointer;
 }
