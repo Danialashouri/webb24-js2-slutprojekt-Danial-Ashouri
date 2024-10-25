@@ -5,10 +5,9 @@ const PORT = 5002;
 const fs = require ("fs");
 const path = require("path"); 
 
-app.use("/img", express.static("img"));
 app.use(cors({
     origin: 'http://localhost:3000',  // Allow requests from your React app
-    methods: ['GET', 'POST'],         // Allowed request methods
+    methods: ['GET', 'POST',],         // Allowed request methods
 }));
 
 app.use(express.json());

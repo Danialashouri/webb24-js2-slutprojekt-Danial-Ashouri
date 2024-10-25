@@ -1,7 +1,7 @@
 import React,{ useState,useEffect } from "react";
 import Products from "./Products.jsx";
-import "./App.css" 
 import ShoppingCart from "./Shoppingcart.jsx";
+import "./App.css" 
 
 function Frontpage() {
         const [cart, setCart] = useState ([]); 
@@ -25,12 +25,15 @@ function Frontpage() {
                 });
         }, []);
 
-    // Adds products to the cart and reduces stock on the server      
+
+    // Adds products to the cart and update stock on the server      
     const addToCart = (productData) => {
-        if (productData.stock > 0) {
+        const cartCount = cart.filter((item) => item.id === productData.id).length;
+
+        if (cartCount < productData.stock) {
          
             fetch("http://localhost:5002/products", {
-                method: "POST",
+                method: "POST",                      
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -49,44 +52,57 @@ function Frontpage() {
         .catch(error => {
             console.error("Error updating stock", error);
         });
+    } else { 
+        alert("Sorry, no more items available in stock.");
     }
 };
 
+
 //Function that clears the cart and restores stock to server
-    const deleteCart = () => {
-         const stockUpdates = {};
+const clearCart = () => {
+   
+    const stockUpdates = {};
+
+ 
+    cart.forEach(product => {
+        stockUpdates[product.id] = (stockUpdates[product.id] || 0) + 1;
+    });
+
+    // Send request to restore stock for each product in stockUpdates
+    Promise.all(
+        Object.keys(stockUpdates).map(productId => {
+            return fetch("http://localhost:5002/products", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ productId: parseInt(productId), change: stockUpdates[productId] }) 
+            }).then(response => response.json());
+        })
+    )
+    .then(updatedProducts => {
+
+        updatedProducts.forEach(updatedProduct => {
+            if (!updatedProduct || !updatedProduct.id) {
+                throw new Error("Error updating stock");
+            }
+        });
 
         
-        cart.forEach(product => {
-            stockUpdates[product.id] = (stockUpdates[product.id] || 0) + 1; 
-        });
+        setProducts(prevProducts =>
+            prevProducts.map(product =>
+                updatedProducts.find(p => p.id === product.id) || product
+            )
+        );
 
-   
-        Promise.all(
-            Object.keys(stockUpdates).map(productId => {
-                return fetch("http://localhost:5002/products", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ productId: parseInt(productId), change: stockUpdates[productId] }) 
-                });
-            })
-        )
-        .then(responses => {
-            responses.forEach(response => {
-                if (!response.ok) {
-                    throw new Error("Error updating stock");
-                }
-            });
-         
-            setCart([]);
-            setShowCart(false);
-        })
-        .catch(error => {
-            console.error("Error during clearing cart process:", error);
-        });
-    };
+        
+        setCart([]);
+        setShowCart(false);
+    })
+    .catch(error => {
+        console.error("Error during clearing cart process:", error);
+    });
+};
 
 
     // Processes checkout reduces stock and clears the cart
@@ -103,7 +119,7 @@ function Frontpage() {
     Promise.all(
         Object.keys(stockUpdates).map(productId => {
             return fetch("http://localhost:5002/products", {
-                method: "POST",
+                method: "POST",                           
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -141,7 +157,7 @@ return (
 
         {/* Render either the shopping cart or product page */}
         {showCart ? (
-        <ShoppingCart cart={cart} deleteCart={deleteCart} buyCart={buyCart} />
+        <ShoppingCart cart={cart} clearCart={clearCart} buyCart={buyCart} />
       ) : (
         <Products addToCart={addToCart} />
       )}

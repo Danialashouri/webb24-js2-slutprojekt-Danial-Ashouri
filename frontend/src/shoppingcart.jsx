@@ -1,7 +1,7 @@
 import React from "react"
 
 //displays the contents of the cart and provides options to delete or checkout the cart
-const ShoppingCart = ({cart, deleteCart, buyCart,}) =>{
+const ShoppingCart = ({cart, clearCart, buyCart,}) =>{
 	
 	const multipleItems = cart.reduce((acc, product) => {
         if (acc[product.id]) {				// when putting product in cart, if it excist adds 1 to the quantity
@@ -19,8 +19,8 @@ const ShoppingCart = ({cart, deleteCart, buyCart,}) =>{
 
 	return (
 		<div className="cart">
-			<h3>Cart</h3>
-			{cart.length === 0 ? ("Your cart is empty") : (
+			<h3 id="h3cart">Cart</h3>
+			{cart.length === 0 ? <p>Your cart is empty</p> : (
 			<div>
 				<ul>
 				{Object.values(multipleItems).map((product) => (
@@ -30,7 +30,7 @@ const ShoppingCart = ({cart, deleteCart, buyCart,}) =>{
                         ))}
                     </ul>
 				<p>Total: {totPrice}:-</p>
-				<button onClick={deleteCart}>Clear cart</button>
+				<button onClick={clearCart}>Clear cart</button>
 				<button onClick={buyCart}>Checkout</button>
 			</div>
 			)}
